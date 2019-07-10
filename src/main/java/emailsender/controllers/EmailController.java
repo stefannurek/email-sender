@@ -31,9 +31,11 @@ public class EmailController {
         public String sendMail(@ModelAttribute MyEmail myEmail){
         Context context = new Context();
         context.setVariable("body", myEmail.getBody());
-        String template = templateEngine.process()
-        return null;
+        String templateEmail = templateEngine.process("template-email", context);
+        emailSender.sendEmail(myEmail.getAddress(), myEmail.getSubject(), templateEmail);
+        return "index";
     }
+
 
     @GetMapping("/sender")
     public String sender(){
